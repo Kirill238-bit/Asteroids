@@ -24,8 +24,6 @@ export default async function Home() {
   .then(asteroids=>asteroids.near_earth_objects)
   .then(asteroids=>Object.values(asteroids))
   
-  //.map((key:any)=>(Object.entries(key))))
-  //.then(key=>Object.values(key));
   return (
     <main>
       <div className={style.wrapper}>
@@ -44,7 +42,7 @@ export default async function Home() {
             height={620}/>
           </div>
         </div>
-        <div>
+        <div className={style.asteroids}>
           <AsteroidsScrol AsteroidsList={asteroids}/>
         </div>
       </div>

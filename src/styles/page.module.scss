@@ -1,5 +1,7 @@
 .wrapper{
     max-width: 1356px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .conteiner{
@@ -22,7 +24,22 @@
             margin-left: 16px;
         }
         .image{
+            z-index: -9999;
+            position:fixed;
             max-width: 536px;
             max-height: 620px;
+            margin-top: 120px;
         }
+}
+
+.asteroids{
+    margin-top:132px;
+}
+
+.cart_conteiner{
+    width: 150px;
+    max-height: 161px;
+    padding: 16px;
+    border-radius: 24px;
+    background-color:#232526;
 }
