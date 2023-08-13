@@ -1,12 +1,14 @@
 'use client'
 import { useEffect, useMemo, useState } from 'react';
 import Image from '../../../node_modules/next/image';
+import Link from '../../../node_modules/next/link';
 import style from './AsteroidsScrol.module.scss'
 
 export default function AsteroidsScrol({AsteroidsList}:any) {
-    console.log(AsteroidsList);
+    //console.log(AsteroidsList);
     const [km,setKm]=useState(true);
     const [lunar,setLunar]=useState(false);
+    const [CartItems,setCartItems]=useState<any>([]);
 
     const KM=()=>{
         setKm(true);
@@ -16,6 +18,25 @@ export default function AsteroidsScrol({AsteroidsList}:any) {
         setKm(false);
         setLunar(true);
     }
+
+    function addToCart(item:any){
+        const newItem: any = {
+          id:item.id,
+          name:item.name,
+          km:item.close_approach_data.map((key:any)=>key.miss_distance.kilometers),
+          lunar:item.close_approach_data.map((key:any)=>key.miss_distance.lunar),
+          diameter:item.estimated_diameter.meters.estimated_diameter_min,
+          dangerous:item.is_potentially_hazardous_asteroid,
+          date:item.close_approach_data.map((key:any)=>key.close_approach_date),
+        };
+          if(AsteroidsList.find((item:any)=> item.id===newItem.id)){
+            alert('Сближение уже добавлено в корзину');
+          }
+          else{
+            setCartItems([...CartItems, newItem]);
+          }
+      }
+      //console.log(CartItems);
     return(
         <div className={style.wrapper}>
             <div className={style.main_content}>
@@ -60,14 +81,16 @@ export default function AsteroidsScrol({AsteroidsList}:any) {
                                         height={40}
                                         />
                                     </div>
+                                    <Link href={`/Asteroidpage/${item.id}`}>
                                         <div>
                                             <div className={style.name}>{item.name}</div>
                                             <div className={style.diameter}>{item.estimated_diameter.meters.estimated_diameter_min}</div>
                                         </div>
+                                    </Link>
                                 </div>
                             </div>
                             <div className={style.button}>
-                                <div className={style.add}>заказать</div>
+                                <div className={style.add} onClick={()=>addToCart(item)}>заказать</div>
                                 <div className={`${style.dangerous} ${item.is_potentially_hazardous_asteroid ? style.dangerous_active : ''}`}>⚠ Опасен</div>
                             </div>
                         </div>
@@ -77,10 +100,10 @@ export default function AsteroidsScrol({AsteroidsList}:any) {
             <div className={style.cart_conteiner}>
                 <div>
                     <div className={style.cart_title}>Корзина</div>
-                    <div className={style.cart_subtitle}>2 астероида</div>
+                    <div className={style.cart_subtitle}>{CartItems.length} астероида</div>
                 </div>
                 <div>
-                    <div className={style.cart_button}><div>Отправить</div></div>
+                    <Link href='/Cartpage'><div className={style.cart_button}><div>Отправить</div></div></Link>
                 </div>
             </div>
         </div>
