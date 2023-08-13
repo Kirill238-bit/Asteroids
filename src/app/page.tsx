@@ -20,7 +20,12 @@ function getStartDate() {
 
 
 export default async function Home() {
-  const asteroids= await getAsteroids();
+  const asteroids= await getAsteroids()
+  .then(asteroids=>asteroids.near_earth_objects)
+  .then(asteroids=>Object.values(asteroids))
+  
+  //.map((key:any)=>(Object.entries(key))))
+  //.then(key=>Object.values(key));
   return (
     <main>
       <div className={style.wrapper}>
