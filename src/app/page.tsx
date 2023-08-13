@@ -40,7 +40,7 @@ export default async function Home() {
           </div>
         </div>
         <div>
-          <AsteroidsScrol asteroids={asteroids.near_earth_objects}/>
+          <AsteroidsScrol AsteroidsList={asteroids}/>
         </div>
       </div>
     </main>
