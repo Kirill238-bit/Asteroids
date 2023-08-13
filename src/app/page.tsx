@@ -5,9 +5,9 @@ import style from '../styles/page.module.scss'
  async function getAsteroids(){
   const start_time=getStartDate();
   console.log(start_time);
-  //const respons= await fetch (`https://api.nasa.gov/neo/rest/v1/feed?start_date=${start_time}&api_key=BDfzLDpe4sPx7D4cbDuYXSIhiMTC2SUFkcXwn6i1`);
+  const respons=await fetch(`https://api.nasa.gov/neo/rest/v1/feed?start_date=${start_time}&api_key=BDfzLDpe4sPx7D4cbDuYXSIhiMTC2SUFkcXwn6i1`)
 
-  //return respons.json();
+  return respons.json();
 }
 function getStartDate() {
   let today = new Date();
