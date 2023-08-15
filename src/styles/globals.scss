@@ -10,3 +10,9 @@ body{
     color: #fff;
     background-color: #000;
 }
+
+@media (max-width:768px) {
+    body{
+        width: 100%;
+    }
+}

@@ -78,5 +78,33 @@
         gap:4px;
         font-size: 18px;
         line-height: 24px;
+        div{
+            font-style: italic;
+            color:rgb(111, 206, 157);
+        }
+    }
+}
+
+@media (max-width:768px) {
+    .wrapper{
+        margin: 0;
+        flex-direction: column;
+        gap:15px;
+    }
+    .big_active{
+        align-items: center;
+    }
+    .little_active{
+        position:center;
+    }
+    .left_conteiner_text{
+        justify-content: center;
+        gap:8px;
+        display: flex;
+        flex-direction: row;
+    }
+    .item_text{
+        flex-wrap: wrap;
+        flex-direction: column;
     }
 }

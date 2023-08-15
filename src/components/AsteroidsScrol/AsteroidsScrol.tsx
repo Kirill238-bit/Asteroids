@@ -1,7 +1,8 @@
 'use client'
 import { Context } from '@/app/actions/context';
 import Cartpage from '@/app/Cartpage/page';
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { setTimeout } from 'timers';
 import Image from '../../../node_modules/next/image';
 import Link from '../../../node_modules/next/link';
 import style from './AsteroidsScrol.module.scss'
@@ -10,6 +11,9 @@ export default function AsteroidsScrol({AsteroidsList}:any) {
     const [km,setKm]=useState(true);
     const [lunar,setLunar]=useState(false);
     const {CartItems,setCartItems}=useContext(Context);
+    const lastElement=useRef<any>();
+    const observer=useRef<any>();
+    const [pagination,setPagination]=useState<any>(1)
 
     const KM=()=>{
         setKm(true);
@@ -19,6 +23,18 @@ export default function AsteroidsScrol({AsteroidsList}:any) {
         setKm(false);
         setLunar(true);
     }
+    useEffect(()=>{
+        if(observer.current)observer.current.disconnect()
+        let callback=function(entries:any,observer:any){
+            if(entries[0].isIntersecting &&pagination<7){
+                setTimeout(async()=>{
+                    setPagination(pagination+1);
+                },500)
+            }
+        };
+         observer.current=new IntersectionObserver(callback);
+         observer.current.observe(lastElement.current)
+    },[pagination])
 
     function addToCart(item:any){
         const newItem: any = {
@@ -49,7 +65,7 @@ export default function AsteroidsScrol({AsteroidsList}:any) {
                     </div>
                 </div>
                 <div className={style.items_list}>
-                    {AsteroidsList.map((key:any)=>(key.map((item:any)=>(
+                    {AsteroidsList.map((key:any)=>(key.slice(0,pagination).map((item:any)=>(
                         <div key={item.id} className={style.item}>
                             <div className={style.item_title}>
                                 {item.close_approach_data.map((key:any)=>key.close_approach_date)}
@@ -95,6 +111,7 @@ export default function AsteroidsScrol({AsteroidsList}:any) {
                             </div>
                         </div>
                     ))))}
+                    <div ref={lastElement}/>
                 </div>
             </div>
             <div className={style.cart_conteiner}>
