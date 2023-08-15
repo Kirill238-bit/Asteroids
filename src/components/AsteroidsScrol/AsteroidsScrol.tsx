@@ -9,11 +9,14 @@ import style from './AsteroidsScrol.module.scss'
 
 export default function AsteroidsScrol({AsteroidsList}:any) {
     const [km,setKm]=useState(true);
-    const [lunar,setLunar]=useState(false);
+    const [lunar,setLunar]=useState(false);//резет для выбора расстояния
+
     const {CartItems,setCartItems}=useContext(Context);
-    const lastElement=useRef<any>();
-    const observer=useRef<any>();
-    const [pagination,setPagination]=useState<any>(1)
+
+    const lastElement=useRef<any>();// последний элемент для пагинации
+    const observer=useRef<any>();//слежка за пагинацией
+
+    const [pagination,setPagination]=useState<any>(1)//изменение кол-во отрисованных элементов
 
     const KM=()=>{
         setKm(true);
@@ -23,6 +26,7 @@ export default function AsteroidsScrol({AsteroidsList}:any) {
         setKm(false);
         setLunar(true);
     }
+    //для пагинации
     useEffect(()=>{
         if(observer.current)observer.current.disconnect()
         let callback=function(entries:any,observer:any){
@@ -52,7 +56,7 @@ export default function AsteroidsScrol({AsteroidsList}:any) {
           else{
             setCartItems([...CartItems, newItem]);
           }
-      }
+    }
     return(
         <div className={style.wrapper}>
             <div className={style.main_content}>
@@ -83,18 +87,18 @@ export default function AsteroidsScrol({AsteroidsList}:any) {
                                 <div className={style.item_info_subinfo}>
                                     <div className={`${style.litle} ${parseInt(item.estimated_diameter.meters.estimated_diameter_min)<100 ? style.litle_active : ''}`}>
                                         <Image
-                                        src='/images/pngegg 1.png'
-                                        alt='asteroid'
-                                        width={22}
-                                        height={24}
+                                            src='/images/pngegg 1.png'
+                                            alt='asteroid'
+                                            width={22}
+                                            height={24}
                                         />
                                     </div>
                                     <div className={`${style.big} ${parseInt(item.estimated_diameter.meters.estimated_diameter_min)>=100 ? style.big_active : ''}`}>
                                         <Image
-                                        src='/images/pngegg 2.png'
-                                        alt='asteroid'
-                                        width={36}
-                                        height={40}
+                                            src='/images/pngegg 2.png'
+                                            alt='asteroid'
+                                            width={36}
+                                            height={40}
                                         />
                                     </div>
                                     <Link href={`/Asteroidpage/${item.id}`}>

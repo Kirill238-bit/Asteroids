@@ -16,28 +16,28 @@ export default  async function AsteroidPage({params:{id}}:any) {
         <div className={style.left_conteiner}>
             <div className={style.image}>
                 <Image
-                src='/images/asteroid.png'
-                alt='asteroid'
-                width={400}
-                height={460}
+                    src='/images/asteroid.png'
+                    alt='asteroid'
+                    width={400}
+                    height={460}
                 />
             </div>
             <div className={style.left_conteiner_title}>{asteroid.name}</div>
             <div className={`${style.little} ${parseInt(asteroid.estimated_diameter.meters.estimated_diameter_min)<100 ? style.little_active : ''}`}>
-            <Image
-                src='/images/pngegg 1.png'
-                alt='asteroid'
-                width={22}
-                height={24}
-            />
+                <Image
+                    src='/images/pngegg 1.png'
+                    alt='asteroid'
+                    width={22}
+                    height={24}
+                />
             </div>
             <div className={`${style.big} ${parseInt(asteroid.estimated_diameter.meters.estimated_diameter_min)>=100 ? style.big_active : ''}`}>
-            <Image
-                src='/images/pngegg 2.png'
-                alt='asteroid'
-                width={36}
-                height={40}
-            />
+                <Image
+                    src='/images/pngegg 2.png'
+                    alt='asteroid'
+                    width={36}
+                    height={40}
+                />
             </div>
             <div className={style.left_conteiner_text}>
                 <div>{asteroid.estimated_diameter.meters.estimated_diameter_min} м</div>

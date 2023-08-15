@@ -13,7 +13,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const [CartItems,setCartItems]=useState<[]>([]);
+  const [CartItems,setCartItems]=useState<[]>([]);//контекст для корзины
   return (
     <html lang="en">
       <body>
