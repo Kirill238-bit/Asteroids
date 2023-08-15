@@ -1,4 +1,5 @@
 'use client'
+import { CartItem } from '@/components/Type/CartItem';
 import { useState } from 'react';
 import '../styles/globals.scss'
 import { Context } from './actions/context';
@@ -13,7 +14,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const [CartItems,setCartItems]=useState<[]>([]);//контекст для корзины
+  const [CartItems,setCartItems]=useState<CartItem[]>([]);//контекст для корзины
   return (
     <html lang="en">
       <body>

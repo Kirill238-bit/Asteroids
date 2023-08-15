@@ -1,3 +1,4 @@
+import { CartItem } from "@/components/Type/CartItem";
 import { createContext } from "react";
 
 

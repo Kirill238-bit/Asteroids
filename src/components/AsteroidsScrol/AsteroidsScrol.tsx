@@ -1,13 +1,14 @@
 'use client'
 import { Context } from '@/app/actions/context';
-import Cartpage from '@/app/Cartpage/page';
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { setTimeout } from 'timers';
 import Image from '../../../node_modules/next/image';
 import Link from '../../../node_modules/next/link';
+import { AsteroidsMassive, AsteroidsMassProps } from '../Type/AsteroidsProps';
+import { CartItem } from '../Type/CartItem';
 import style from './AsteroidsScrol.module.scss'
 
-export default function AsteroidsScrol({AsteroidsList}:any) {
+export default function AsteroidsScrol({AsteroidsList}:AsteroidsMassProps) {
     const [km,setKm]=useState(true);
     const [lunar,setLunar]=useState(false);//резет для выбора расстояния
 
@@ -16,7 +17,7 @@ export default function AsteroidsScrol({AsteroidsList}:any) {
     const lastElement=useRef<any>();// последний элемент для пагинации
     const observer=useRef<any>();//слежка за пагинацией
 
-    const [pagination,setPagination]=useState<any>(1)//изменение кол-во отрисованных элементов
+    const [pagination,setPagination]=useState<number>(1)//изменение кол-во отрисованных элементов
 
     const KM=()=>{
         setKm(true);
@@ -28,9 +29,13 @@ export default function AsteroidsScrol({AsteroidsList}:any) {
     }
     //для пагинации
     useEffect(()=>{
-        if(observer.current)observer.current.disconnect()
+        if(observer.current)
+        observer.current.disconnect()
+
         let callback=function(entries:any,observer:any){
+
             if(entries[0].isIntersecting &&pagination<7){
+
                 setTimeout(async()=>{
                     setPagination(pagination+1);
                 },500)
@@ -40,23 +45,24 @@ export default function AsteroidsScrol({AsteroidsList}:any) {
          observer.current.observe(lastElement.current)
     },[pagination])
 
-    function addToCart(item:any){
-        const newItem: any = {
+    function addToCart(item:AsteroidsMassive){
+        const newItem: CartItem = {
           id:item.id,
           name:item.name,
-          km:item.close_approach_data.map((key:any)=>key.miss_distance.kilometers),
-          lunar:item.close_approach_data.map((key:any)=>key.miss_distance.lunar),
+          km:item.close_approach_data.map((key)=>key.miss_distance.kilometers),
+          lunar:item.close_approach_data.map((key)=>key.miss_distance.lunar),
           diameter:item.estimated_diameter.meters.estimated_diameter_min,
           dangerous:item.is_potentially_hazardous_asteroid,
-          date:item.close_approach_data.map((key:any)=>key.close_approach_date),
+          date:item.close_approach_data.map((key)=>key.close_approach_date),
         };
-          if(AsteroidsList.find((item:any)=> item.id===newItem.id)){
+          if(AsteroidsList.find((item:AsteroidsMassive)=> item.id===newItem.id)){
             alert('Сближение уже добавлено в корзину');
           }
           else{
             setCartItems([...CartItems, newItem]);
           }
     }
+    console.log(CartItems)
     return(
         <div className={style.wrapper}>
             <div className={style.main_content}>
@@ -69,23 +75,23 @@ export default function AsteroidsScrol({AsteroidsList}:any) {
                     </div>
                 </div>
                 <div className={style.items_list}>
-                    {AsteroidsList.map((key:any)=>(key.slice(0,pagination).map((item:any)=>(
+                    {AsteroidsList.map((key:any)=>(key.slice(0,pagination).map((item:AsteroidsMassive)=>(
                         <div key={item.id} className={style.item}>
                             <div className={style.item_title}>
-                                {item.close_approach_data.map((key:any)=>key.close_approach_date)}
+                                {item.close_approach_data.map((key)=>key.close_approach_date)}
                             </div>
                             <div className={style.item_info}>
                                 <div className={style.item_info_distanse}>
                                     <div className={`${style.km} ${km ? style.km_active : ''}`}>
-                                        {item.close_approach_data.map((key:any)=>key.miss_distance.kilometers)} км
+                                        {item.close_approach_data.map((key)=>key.miss_distance.kilometers)} км
                                     </div>
                                     <div className={`${style.lunar} ${lunar ? style.lunar_active : ''}`}>
-                                        {item.close_approach_data.map((key:any)=>key.miss_distance.lunar)} лунных орбит
+                                        {item.close_approach_data.map((key)=>key.miss_distance.lunar)} лунных орбит
                                     </div>
                                     <div className={style.arrow_conteiner}><div>{`◄`}</div><div className={style.line}></div><div>{`►`}</div></div>
                                 </div>
                                 <div className={style.item_info_subinfo}>
-                                    <div className={`${style.litle} ${parseInt(item.estimated_diameter.meters.estimated_diameter_min)<100 ? style.litle_active : ''}`}>
+                                    <div className={`${style.litle} ${item.estimated_diameter.meters.estimated_diameter_min <100 ? style.litle_active : ''}`}>
                                         <Image
                                             src='/images/pngegg 1.png'
                                             alt='asteroid'
@@ -93,7 +99,7 @@ export default function AsteroidsScrol({AsteroidsList}:any) {
                                             height={24}
                                         />
                                     </div>
-                                    <div className={`${style.big} ${parseInt(item.estimated_diameter.meters.estimated_diameter_min)>=100 ? style.big_active : ''}`}>
+                                    <div className={`${style.big} ${item.estimated_diameter.meters.estimated_diameter_min >=100 ? style.big_active : ''}`}>
                                         <Image
                                             src='/images/pngegg 2.png'
                                             alt='asteroid'

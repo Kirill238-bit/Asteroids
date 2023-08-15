@@ -1,4 +1,5 @@
 'use client'
+import { CartItem } from '@/components/Type/CartItem';
 import style from '@/styles/cartpage.module.scss'
 import { useContext } from 'react';
 import Image from '../../../node_modules/next/image'
@@ -7,15 +8,14 @@ import { Context } from '../actions/context';
 
 export default function Cartpage() {
   const {CartItems,setCartItems}=useContext(Context);
-
   return (
     <div className={style.wrapper}>
       <div className={style.title}>Заказ отправлен!</div>
       <div className={style.items_list}>
-            {CartItems.map((item:any)=>(
+            {CartItems.map((item:CartItem)=>(
                 <div key={item.id} className={style.item}>
                     <div className={style.item_title}>
-                        {item.data}
+                        {item.date}
                     </div>
                     <div className={style.item_info}>
                         <div className={style.item_info_distanse}>
@@ -25,7 +25,7 @@ export default function Cartpage() {
                             <div className={style.arrow_conteiner}><div>{`◄`}</div><div className={style.line}></div><div>{`►`}</div></div>
                         </div>
                         <div className={style.item_info_subinfo}>
-                            <div className={`${style.litle} ${parseInt(item.diameter)<100 ? style.litle_active : ''}`}>
+                            <div className={`${style.litle} ${item.diameter <100 ? style.litle_active : ''}`}>
                                 <Image
                                     src='/images/pngegg 1.png'
                                     alt='asteroid'
@@ -33,7 +33,7 @@ export default function Cartpage() {
                                     height={24}
                                 />
                             </div>
-                            <div className={`${style.big} ${parseInt(item.diameter)>=100 ? style.big_active : ''}`}>
+                            <div className={`${style.big} ${item.diameter >=100 ? style.big_active : ''}`}>
                                     <Image
                                         src='/images/pngegg 2.png'
                                         alt='asteroid'

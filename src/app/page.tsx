@@ -1,4 +1,5 @@
 import AsteroidsScrol from '@/components/AsteroidsScrol/AsteroidsScrol';
+import { AsteroidsMassive } from '@/components/Type/AsteroidsProps';
 import Image from '../../node_modules/next/image'
 import style from '../styles/page.module.scss'
 
@@ -20,10 +21,9 @@ function getStartDate() {//получение даты пользователя
 
 
 export default async function Home() {
-  const asteroids= await getAsteroids()
+  const asteroids:AsteroidsMassive[]= await getAsteroids()
   .then(asteroids=>asteroids.near_earth_objects) //типизация пришедших объектов
   .then(asteroids=>Object.values(asteroids))
-  
   return (
     <main>
       <div className={style.wrapper}>

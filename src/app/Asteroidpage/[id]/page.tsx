@@ -1,16 +1,16 @@
+import { Asteroid, AsteroidDATA } from '@/components/Type/Asteroid';
 import style from '@/styles/asteroidpage.module.scss'
 import Image from '../../../../node_modules/next/image';
-import Link from '../../../../node_modules/next/link';
+
 
 export default  async function AsteroidPage({params:{id}}:any) {
 
-    async function getAsteroid(id:any){
+    async function getAsteroid(id:number){
         const respons=await fetch(`https://api.nasa.gov/neo/rest/v1/neo/${id}?api_key=BDfzLDpe4sPx7D4cbDuYXSIhiMTC2SUFkcXwn6i1`)
 
         return respons.json();
     }
-    const asteroid=await getAsteroid(+id)
-    console.log(asteroid)
+    const asteroid:Asteroid=await getAsteroid(+id)
   return (
     <div className={style.wrapper}>
         <div className={style.left_conteiner}>
@@ -23,7 +23,7 @@ export default  async function AsteroidPage({params:{id}}:any) {
                 />
             </div>
             <div className={style.left_conteiner_title}>{asteroid.name}</div>
-            <div className={`${style.little} ${parseInt(asteroid.estimated_diameter.meters.estimated_diameter_min)<100 ? style.little_active : ''}`}>
+            <div className={`${style.little} ${asteroid.estimated_diameter.meters.estimated_diameter_min <100 ? style.little_active : ''}`}>
                 <Image
                     src='/images/pngegg 1.png'
                     alt='asteroid'
@@ -31,7 +31,7 @@ export default  async function AsteroidPage({params:{id}}:any) {
                     height={24}
                 />
             </div>
-            <div className={`${style.big} ${parseInt(asteroid.estimated_diameter.meters.estimated_diameter_min)>=100 ? style.big_active : ''}`}>
+            <div className={`${style.big} ${asteroid.estimated_diameter.meters.estimated_diameter_min >=100 ? style.big_active : ''}`}>
                 <Image
                     src='/images/pngegg 2.png'
                     alt='asteroid'
@@ -45,7 +45,7 @@ export default  async function AsteroidPage({params:{id}}:any) {
             </div>
         </div>
         <div className={style.right_conteiner}>
-            {asteroid.close_approach_data.map((item:any)=>(
+            {asteroid.close_approach_data.map((item:AsteroidDATA)=>(
                 <div key={item.close_approach_date} className={style.item}>
                     <div className={style.item_title}>{item.orbiting_body}</div>
                     <div className={style.item_text}>Время сближения с Землей:<div>{item.close_approach_date_full}</div></div>
