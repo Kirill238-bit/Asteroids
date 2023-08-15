@@ -1,14 +1,15 @@
 'use client'
-import { useEffect, useMemo, useState } from 'react';
+import { Context } from '@/app/actions/context';
+import Cartpage from '@/app/Cartpage/page';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import Image from '../../../node_modules/next/image';
 import Link from '../../../node_modules/next/link';
 import style from './AsteroidsScrol.module.scss'
 
 export default function AsteroidsScrol({AsteroidsList}:any) {
-    //console.log(AsteroidsList);
     const [km,setKm]=useState(true);
     const [lunar,setLunar]=useState(false);
-    const [CartItems,setCartItems]=useState<any>([]);
+    const {CartItems,setCartItems}=useContext(Context);
 
     const KM=()=>{
         setKm(true);
@@ -36,7 +37,6 @@ export default function AsteroidsScrol({AsteroidsList}:any) {
             setCartItems([...CartItems, newItem]);
           }
       }
-      //console.log(CartItems);
     return(
         <div className={style.wrapper}>
             <div className={style.main_content}>
