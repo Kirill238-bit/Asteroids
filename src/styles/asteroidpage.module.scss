@@ -99,9 +99,11 @@
     }
     .left_conteiner_text{
         justify-content: center;
-        gap:8px;
         display: flex;
         flex-direction: row;
+    }
+    .image{
+        width: 100%;
     }
     .item_text{
         flex-wrap: wrap;
